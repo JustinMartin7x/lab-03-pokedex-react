@@ -7,14 +7,21 @@ export default class Header extends Component {
         return (
 
             <header className="App-header">
-                <div className="pokedex"> Pokedex </div>
-                <div clasname="header-list">
+                <div className="pokedex">
+                    <h1>Pokedex</h1>
+                </div>
+                <div className="header-list">
                     <ul>
                         <li>
                             <Link to="./">Home</Link>
+                        </li>
+                        <li>
                             <Link to="./MainPage" >Search By Name </Link>
+                        </li>
+                        <li>
                             <Link to="./SortPage">Sort by Attribute </Link>
                         </li>
+
                     </ul>
                 </div>
             </header>
