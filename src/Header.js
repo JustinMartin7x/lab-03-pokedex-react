@@ -1,23 +1,24 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
+
 export default class Header extends Component {
     render() {
         return (
-            <div>
-                <div className="App">
-                    <header className="App-header">
-                        <div className="pokedex">Pokedex</div>
-                        <ul>
-                            <li>
-                                <Link to="./MainPage" >To Main Page</Link>
-                                <Link to="./">Index Page</Link>
-                            </li>
-                        </ul>
-                    </header>
-                </div>
 
-            </div>
+            <header className="App-header">
+                <div className="pokedex"> Pokedex </div>
+                <div clasname="header-list">
+                    <ul>
+                        <li>
+                            <Link to="./">Home</Link>
+                            <Link to="./MainPage" >Search By Name </Link>
+                            <Link to="./SortPage">Sort by Attribute </Link>
+                        </li>
+                    </ul>
+                </div>
+            </header>
+
         )
     }
 }
