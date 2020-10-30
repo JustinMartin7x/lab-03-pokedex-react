@@ -2,6 +2,11 @@ import React, { Component } from 'react'
 import PokeCard from './PokeCard.js'
 import fetch from 'superagent'
 
+// const sleep = (time) => new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve()
+//     }, time)
+// });
 
 
 
@@ -42,6 +47,8 @@ export default class PokeList extends Component {
     }
     fetchPokemon = async () => {
         let items = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?pokemon=${this.state.name}&sort=${this.state.type}&direction=${this.state.direction}&perPage=500`)
+        // await sleep(2000)
+
 
         this.setState({ pokemon: items.body.results })
     }
@@ -71,8 +78,6 @@ export default class PokeList extends Component {
                     <button onClick={this.handleSubmit}>Search</button>
 
                 </div>
-
-
                 {
                     this.state.pokemon.map(card =>
                         <PokeCard
