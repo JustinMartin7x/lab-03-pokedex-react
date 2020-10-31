@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PokeCard from './PokeCard.js'
 import fetch from 'superagent'
+import { Link } from 'react-router-dom'
 
 const sleep = (time) => new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -39,6 +40,10 @@ export default class PokeList extends Component {
             type: e.target.value,
         })
     }
+    handleClick = async (pokemon) => {
+        this.state.history.push(`/DetailsPage/${pokemon._id}`)
+    }
+
     fetchPokemon = async () => {
         this.setState({
             loading: true
@@ -72,13 +77,18 @@ export default class PokeList extends Component {
                 <div className="pokemon-display">
                     {!this.state.loading ?
                         this.state.pokemon.map((card, i) =>
-                            <PokeCard
-                                key={i}
-                                shadow={card.color_1}
-                                color={card.color_1}
-                                url={card.url_image}
-                                name={card.pokebase}
-                                type={card.type_1} />
+                            <Link to={`/DetailsPage/${card._id}`}>
+                                <PokeCard
+
+                                    key={i}
+                                    shadow={card.color_1}
+                                    color={card.color_1}
+                                    url={card.url_image}
+                                    name={card.pokebase}
+                                    type={card.type_1}
+                                    id={card._id}
+                                />
+                            </Link>
                         ) :
                         "Loading!!"
                     }
