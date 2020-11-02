@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PokeCard from './PokeCard.js'
 import fetch from 'superagent'
+import { Link } from 'react-router-dom'
 
 const sleep = (time) => new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -12,7 +13,8 @@ export default class PokeList extends Component {
         pokemon: [],
         name: '',
         type: 'type_1',
-        direction: 'asc'
+        direction: 'asc',
+        page: 1
     }
     componentDidMount = async () => {
         const items = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex`);
@@ -39,11 +41,27 @@ export default class PokeList extends Component {
             type: e.target.value,
         })
     }
+    handleClick = async (pokemon) => {
+        this.state.history.push(`/DetailsPage/${pokemon._id}`)
+    }
+    handlePageUp = async () => {
+        this.setState({
+            page: this.state.page + 1
+        })
+        await this.fetchPokemon()
+    }
+    handlePageDown = async () => {
+        this.setState({
+            page: this.state.page - 1
+        })
+        await this.fetchPokemon()
+    }
+
     fetchPokemon = async () => {
         this.setState({
             loading: true
         })
-        let items = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?pokemon=${this.state.name}&sort=${this.state.type}&direction=${this.state.direction}&perPage=500`)
+        let items = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex?pokemon=${this.state.name}&sort=${this.state.type}&direction=${this.state.direction}&page=${this.state.page}&perPage=20`)
         await sleep(2000)
         this.setState({
             pokemon: items.body.results,
@@ -67,18 +85,27 @@ export default class PokeList extends Component {
                         <option value="hp">HP</option>
                         <option value="speed">Speed</option>
                     </select>
-                    <button onClick={this.handleSubmit}>Search</button>
+                    <div className="pages">
+                        <button onClick={this.handleSubmit}>Search</button>
+                        <button onClick={this.handlePageDown}>Previous</button>
+                        <button onClick={this.handlePageUp}>Next</button>
+                    </div>
                 </div>
                 <div className="pokemon-display">
                     {!this.state.loading ?
                         this.state.pokemon.map((card, i) =>
-                            <PokeCard
-                                key={i}
-                                shadow={card.color_1}
-                                color={card.color_1}
-                                url={card.url_image}
-                                name={card.pokebase}
-                                type={card.type_1} />
+                            <Link to={`/DetailsPage/${card.pokemon}`}>
+
+                                <PokeCard
+                                    key={i}
+                                    shadow={card.color_1}
+                                    color={card.color_1}
+                                    url={card.url_image}
+                                    name={card.pokebase}
+                                    type={card.type_1}
+                                    id={card._id}
+                                />
+                            </Link>
                         ) :
                         "Loading!!"
                     }

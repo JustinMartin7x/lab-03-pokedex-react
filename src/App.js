@@ -8,7 +8,7 @@ import {
 import SearchPage from './SearchPage.js';
 import Header from './Header.js'
 import SortPage from './SortPage.js';
-import HomePage from './HomePage.js'
+import DetailsPage from './DetailsPage.js';
 
 
 
@@ -19,7 +19,6 @@ export default class App extends Component {
       <div className="main">
         <Router>
           <Header />
-          <HomePage />
           <Switch>
             <Route
               path="/MainPage"
@@ -31,6 +30,12 @@ export default class App extends Component {
               exact
               render={(routerProps) =>
                 <SortPage {...routerProps} />}
+            />
+            <Route
+              path="/DetailsPage/:pokemon"
+              exact
+              render={(routerProps) =>
+                <DetailsPage {...routerProps} />}
             />
           </Switch>
         </Router>
