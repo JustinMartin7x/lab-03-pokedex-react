@@ -32,7 +32,7 @@ export default class App extends Component {
                 <SortPage {...routerProps} />}
             />
             <Route
-              path="/DetailsPage/:_id"
+              path="/DetailsPage/:pokemon"
               exact
               render={(routerProps) =>
                 <DetailsPage {...routerProps} />}

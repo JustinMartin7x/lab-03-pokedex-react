@@ -9,11 +9,17 @@ const sleep = (time) => new Promise((resolve, reject) => {
 export default class DetailsPage extends Component {
 
     state = {
-        pokemon: {},
+        pokemon: [],
         loading: true
     }
+
     componentDidMount = async () => {
-        const poke = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex/${this.props.match.params._id}`);
+        this.setState({
+            loading: true
+        })
+        const poke = await fetch.get(`https://alchemy-pokedex.herokuapp.com/api/pokedex/?pokemon=${this.props.match.params.pokemon}`);
+        await sleep(20)
+        console.log(this.props.match.params.poke)
 
         this.setState({
             pokemon: poke.body.results,
@@ -24,23 +30,21 @@ export default class DetailsPage extends Component {
 
         return (
             <div>
-
-                {
-                    !this.state.loading ?
+                {!this.state.loading ?
+                    this.state.pokemon.map((poke, i) =>
                         <div
+                            key="i"
                             className="pokeCard"
-                            style={{ backgroundColor: this.state.pokemon.color_1, boxShadow: `0px 0px 25px ${this.state.pokemon.color_1}` }}
+                            style={{ backgroundColor: poke.color_1, boxShadow: `0px 0px 25px ${poke.color_1}` }}
                         >
-                            <img src={this.state.pokemon.url_image} alt="pokemon" className="pokeImg" />
-                            <div>Name: {this.state.pokemon.pokebase}</div>
-                            <div>Type: {this.state.pokemon.type_1}</div>
-                        </div>
-                        :
+                            <img src={poke.url_image} alt="pokemon" className="pokeImg" />
+                            <div>Name: {poke.pokemon}</div>
+                            <div>Type: {poke.type_1}</div>
 
-
-                        "loading"
+                        </div>)
+                    :
+                    "loading"
                 }
-
             </div>
         )
     }
