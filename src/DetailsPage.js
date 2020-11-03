@@ -31,9 +31,9 @@ export default class DetailsPage extends Component {
         return (
             <div>
                 {!this.state.loading ?
-                    this.state.pokemon.map((poke, i) =>
+                    this.state.pokemon.map((poke, key) =>
                         <div
-                            key="i"
+                            key="key"
                             className="pokeCard"
                             style={{ backgroundColor: poke.color_1, boxShadow: `0px 0px 25px ${poke.color_1}` }}
                         >
