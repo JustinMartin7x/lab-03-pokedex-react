@@ -21,7 +21,7 @@ export default class App extends Component {
           <Header />
           <Switch>
             <Route
-              path="/MainPage"
+              path="/"
               exact
               render={(routerProps) => <SearchPage {...routerProps} />}
             />
@@ -32,7 +32,7 @@ export default class App extends Component {
                 <SortPage {...routerProps} />}
             />
             <Route
-              path="/DetailsPage/:pokemon"
+              path="/detailsPage/:pokemon"
               exact
               render={(routerProps) =>
                 <DetailsPage {...routerProps} />}
